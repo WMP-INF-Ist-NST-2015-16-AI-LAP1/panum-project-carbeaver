@@ -9,10 +9,12 @@ import java.security.NoSuchAlgorithmException;
 public class User implements Parcelable {
     private int userId;
     private String email;
+    private String name;
     private String password;
 
-    public User(int userId, String email, String password) {
+    public User(int userId, String name, String email, String password) {
         this.userId = userId;
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -39,6 +41,14 @@ public class User implements Parcelable {
         return userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -52,10 +62,10 @@ public class User implements Parcelable {
     }
 
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
 
-    public static String hashPassword(String passwordToHash){
+    public static String hashPassword(String passwordToHash) {
         String generatedPassword = null;
         try {
             // Create MessageDigest instance for MD5
@@ -67,15 +77,12 @@ public class User implements Parcelable {
             //This bytes[] has bytes in decimal format;
             //Convert it to hexadecimal format
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
+            for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             //Get complete hashed password in hex format
             generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return generatedPassword;
